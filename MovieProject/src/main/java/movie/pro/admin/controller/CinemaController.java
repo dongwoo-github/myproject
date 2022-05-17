@@ -19,7 +19,7 @@ import movie.pro.admin.service.CinemaService;
 
 @Controller
 public class CinemaController {
-
+//pro2
 	@Autowired
 	CinemaService service;
 	
