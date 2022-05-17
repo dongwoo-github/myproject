@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.servicecenter.dao.InqubdDao">
+
+<insert id="insertInqu" parameterType="movie.pro.servicecenter.dto.InqubdDto">
+	insert into inqubd values(inqubd_seq.nextval,#{inqubd_id},#{inqubd_title},#{inqubd_div},#{inqubd_cinema},#{inqubd_content},sysdate,'','','미답변')
+</insert>
+
+<update id="updateInqu" parameterType="movie.pro.servicecenter.dto.InqubdDto">
+	update inqubd set inqubd_title=#{inqubd_title},inqubd_div=#{inqubd_div},inqubd_cinema=#{inqubd_cinema},inqubd_content=#{inqubd_content} where inqubd_no=#{inqubd_no}
+</update>
+
+<update id="updateComm" parameterType="movie.pro.servicecenter.dto.InqubdDto">
+	update inqubd set inqubd_comm=#{inqubd_comm},inqubd_comm_reg=sysdate,inqubd_a='답변 완료' where inqubd_no=#{inqubd_no}
+</update>
+
+<update id="deleteComm" parameterType="int">
+	update inqubd set inqubd_comm='',inqubd_comm_reg='',inqubd_a='미답변'where inqubd_no=#{inqubd_no}
+</update>
+
+<delete id="deleteInqu" parameterType="int">
+	delete from inqubd where inqubd_no=#{inqubd_no}
+</delete>
+
+<select id="countInqu" resultType="int">
+	select count(*) from inqubd order by inqubd_no
+</select>
+
+<select id="selectInqu" parameterType="int" resultType="movie.pro.servicecenter.dto.InqubdDto">
+	select * from inqubd where inqubd_no=#{inqubd_no}
+</select>
+
+<select id="cinemaList" resultType="movie.pro.admin.dto.CinemaDto">
+	select * from cinema
+</select>
+
+<select id="inqubdList" parameterType="map" resultType="movie.pro.servicecenter.dto.InqubdDto">
+<![CDATA[
+	select * from
+	(select inqubd_no,inqubd_id,inqubd_title,inqubd_div,inqubd_cinema,inqubd_content,inqubd_regdate,inqubd_a ,rownum r
+	from (select * from inqubd order by inqubd_no desc)
+	order by inqubd_no desc)where r >= #{start} AND r <= #{end}
+]]>
+</select>
+
+</mapper>

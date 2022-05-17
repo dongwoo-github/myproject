@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.member.dao.MemberDao">
+
+<insert parameterType="movie.pro.member.dto.MemberDto" id="insertMember">
+	insert into member values (#{mem_id},#{mem_pw},#{mem_name},#{mem_birth},#{mem_phone},#{mem_address},#{mem_email},sysdate,'ROLE_MEMBER','T')
+</insert>
+
+<update id="updatePw" parameterType="map">
+	update member set mem_pw=#{pw} where mem_name = #{name} and mem_email=#{mail} and mem_id=#{id}
+</update>
+	
+<select id="findById" parameterType="String" resultType="movie.pro.member.dto.MemberDto">
+	select * from member where mem_id = #{mem_id}
+</select>
+
+<select id="idList" parameterType="map" resultType="String">
+	select mem_id from member where mem_name = #{name} and mem_email=#{mail}
+</select>
+
+<select id="findId" parameterType="map" resultType="int">
+	select count(*) from member where mem_name = #{name} and mem_email=#{mail}
+</select>
+
+<select id="findPw" parameterType="map" resultType="int">
+	select count(*) from member where mem_name = #{name} and mem_email=#{mail} and mem_id=#{id}
+</select>
+
+<update id="updateMember" parameterType="movie.pro.member.dto.MemberDto">
+update member set mem_pw=#{mem_pw}, mem_phone=#{mem_phone}, mem_address=#{mem_address}, mem_email=#{mem_email}  where mem_id=#{mem_id}
+</update>
+
+<delete id="deleteMember" parameterType="movie.pro.member.dto.MemberDto" >
+	delete from member where mem_pw = #{mem_pw}
+</delete>
+</mapper>

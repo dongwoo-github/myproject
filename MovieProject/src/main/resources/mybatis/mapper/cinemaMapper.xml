@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.admin.dao.CinemaDao">
+
+<insert id="insertCinema" parameterType="movie.pro.admin.dto.CinemaDto">
+	insert into cinema values (cine_seq.nextval,#{cine_name},#{cine_area})
+</insert>
+
+<update id="updateCinema" parameterType="movie.pro.admin.dto.CinemaDto">
+	update cinema set cine_name=#{cine_name},cine_area=#{cine_area} where cine_no=#{cine_no}
+</update>
+
+<delete id="deleteCinema" parameterType="int">
+	delete from cinema where cine_no=#{cine_no}
+</delete>
+
+<select id="cineList" resultType="movie.pro.admin.dto.CinemaDto">
+	select * from cinema order by cine_name
+</select>
+
+<select id="cineOne" parameterType="int" resultType="movie.pro.admin.dto.CinemaDto">
+	select * from cinema where cine_no = #{cine_no}
+</select>
+
+<select id="thList" resultType="movie.pro.admin.dto.TheaterDto">
+	select * from theater
+</select>
+
+</mapper>

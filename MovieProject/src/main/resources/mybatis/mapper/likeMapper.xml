@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="like">
+
+	<select id="ltlikecount" resultType="Integer"
+		parameterType="movie.pro.movbd.dto.LikeDto">
+		select count(*) from movbd_up where
+		movbd_id=#{movbd_id} and movbd_no=#{movbd_no}
+	</select>
+
+	<insert id="likeinsert" parameterType="movie.pro.movbd.dto.LikeDto">
+		insert into
+		movbd_up(movbd_id,movbd_no,LTLIKE)
+		values (#{movbd_id},#{movbd_no},0)
+	</insert>
+
+	<select id="ltlikegetinfo" resultType="Integer"
+		parameterType="movie.pro.movbd.dto.LikeDto">
+		select ltlike from movbd_up where movbd_id=#{movbd_id}
+		and movbd_no=#{movbd_no}
+	</select>
+
+	<update id="likeupdate" parameterType="movie.pro.movbd.dto.LikeDto">
+		update movbd_up
+		set
+		<include refid="cal"></include>
+		where movbd_id=#{movbd_id} and movbd_no=#{movbd_no}
+	</update>
+
+	<sql id="cal">
+		<if test="count == 1">
+			ltlike = 0
+		</if>
+
+		<if test="count == 0">
+			ltlike = 1
+		</if>
+	</sql>
+
+</mapper>

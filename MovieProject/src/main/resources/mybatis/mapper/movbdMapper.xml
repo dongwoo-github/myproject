@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+<mapper namespace="movie.pro.movbd.dao.BoardDao">
+
+<insert parameterType="movie.pro.movbd.dto.BoardDto" id="insert"> insert into movbd values(movbd_seq.nextval, #{movbd_id}, #{movbd_title}, #{movbd_mov}, #{movbd_content}, sysdate, '0', '0') </insert>
+
+<update parameterType="movie.pro.movbd.dto.BoardDto" id="updateBoard"> update movbd set movbd_title=#{movbd_title} , movbd_content=#{movbd_content} where movbd_no=#{movbd_no} </update>
+
+<update parameterType="int" id="readcnt">update movbd set MOVBD_READCNT = MOVBD_READCNT+1 where MOVBD_NO = #{movbd_no}</update>
+
+<delete parameterType="int" id="deleteBoard"> delete from movbd where movbd_no = #{movbd_no} </delete>
+
+<select parameterType="map" id="boardList" resultType="movie.pro.movbd.dto.BoardDto">
+
+<![CDATA[
+		select * from
+		(select movbd_no, movbd_id,  movbd_title, movbd_mov, movbd_content, movbd_regdate, MOVBD_READCNT,movbd_up, rownum r
+		from (select * from movbd order by movbd_regdate desc)
+		order by movbd_regdate desc) where r >= #{start} AND r <= #{end}
+ ]]>
+</select>
+
+<select parameterType="String" id="movList" resultType="String">select DISTINCT mov_title from ticket natural join showinfo where tk_id=#{tk_id}</select>
+
+<select id="count" resultType="int"> select count(*) from movbd </select>
+
+<select parameterType="int" id="likecnt" resultType="int"> select count(*) where ltlike=1 and movbd_no=#{movbd_no}</select>
+
+<select parameterType="int" id="boardOne" resultType="movie.pro.movbd.dto.BoardDto"> select * from movbd where movbd_no = #{movbd_no} </select>
+
+<select id="countSearch" resultType="int" parameterType="map">
+<!--  <![CDATA[-->
+		select count(*) from movbd 
+		<where>
+			<choose>
+				<when test="searchn == 0">
+				MOVBD_TITLE  like '%'||#{search}||'%' </when>
+				<when test="searchn == 1"> MOVBD_ID  like '%'||#{search}||'%' </when>
+			</choose>
+		</where> 
+		<!--  ]]>-->
+</select>
+
+<select id="boardListSearch" parameterType="map" resultType="movie.pro.movbd.dto.BoardDto">
+
+		select * from
+		(select movbd_no, movbd_id,movbd_title, movbd_content, movbd_regdate, movbd_readcnt, rownum r
+		from (select * from movbd order by movbd_regdate desc) 
+		<where>
+			<choose>
+				<when test="searchn == 0">
+				MOVBD_TITLE  like '%'||#{search}||'%' </when>
+				<when test="searchn == 1"> MOVBD_ID  like '%'||#{search}||'%' </when>
+			</choose>
+		</where> 
+		order by movbd_regdate desc    
+		
+		) where r >= #{start} AND r &lt;= #{end}
+ 		
+</select>
+
+</mapper>

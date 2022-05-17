@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.admin.dao.ShowinfoDao">
+
+<insert id="insertShowinfo" parameterType="movie.pro.admin.dto.ShowinfoDto">
+	insert into showinfo values (#{show_no},#{cine_no},#{mov_no},#{th_no},#{show_date},#{show_h},#{show_m},#{th_col},#{th_row},#{th_extra},#{mov_title})
+</insert>
+
+<update id="updateShowinfo" parameterType="movie.pro.admin.dto.ShowinfoDto">
+	update showinfo set cine_no=#{cine_no},mov_no=#{mov_no},th_no=#{th_no},show_date=#{show_date},show_h=#{show_h},show_m=#{show_m},th_col=#{th_col},th_row=#{th_row},th_extr=#{th_extra},mov_title=#{mov_title} where show_no=#{show_no}
+</update>
+
+<delete id="deleteShowinfo" parameterType="long">
+	delete from showinfo where show_no=#{show_no}
+</delete>
+
+<select id="showinfoOne" parameterType="long" resultType="movie.pro.admin.dto.ShowinfoDto">
+	select * from showinfo where show_no=#{show_no}
+</select>
+
+<select id="cineList" parameterType="string" resultType="movie.pro.admin.dto.CinemaDto">
+	select * from cinema where cine_area=#{cine_area} order by cine_name
+</select>
+
+<select id="thList" parameterType="int" resultType="movie.pro.admin.dto.TheaterDto">
+	select * from theater where cine_no=#{cine_no} order by th_no
+</select>
+
+</mapper>

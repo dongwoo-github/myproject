@@ -1,0 +1,16 @@
+@charset "UTF-8";
+#movieMenu div {display:inline-block; background-color:#BCD2F9;}
+	 
+	 #movieMenu div a {font-size: 20px; font-weight:bold; color:white; font-family:nanum ghothic}
+	 #movieMenu div a:link{text-decoration:none;}
+	 #movieMenu div a:visited {text-decoration:none;}
+ 	 #movieMenu div a:hover {text-decoration:underline;}
+	 #movieMenu div a:active {text-decoration:underline;}
+	 
+	 #movieMenu {margin: 30px auto;}
+	 #movieMenu .selected {background-color:#3B6EFA;}
+	 #movieMenu .boxOffice{width:400px; height:60px; line-height:60px; text-align:center;}
+	 #movieMenu .upComming{width:400px; height:60px; line-height:60px; text-align:center;}
+	 #movieMenu .search{width:300px; height:60px; line-height:64px;}
+	 #movieMenu .search input{height:25px;width:200px;}
+	 #movieMenu .search button{height:25px;width:50px;}

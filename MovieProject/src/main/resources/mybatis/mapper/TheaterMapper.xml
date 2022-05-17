@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.admin.dao.TheaterDao">
+
+<insert id="insertTheater" parameterType="movie.pro.admin.dto.TheaterDto">
+	insert into theater values (#{cine_no},#{th_no},#{th_col},#{th_row})
+</insert>
+
+<update id="updateTheater" parameterType="movie.pro.admin.dto.TheaterDto">
+	update theater set th_no=#{th_no},th_col=#{th_col},th_row=#{th_row} where cine_no=#{cine_no}
+</update>
+
+<delete id="deleteTheater" parameterType="map">
+	delete from theater where cine_no=#{cine_no} and th_no=#{th_no}
+</delete>
+
+<select id="thOne" parameterType="map" resultType="movie.pro.admin.dto.TheaterDto">
+	select * from theater where cine_no=#{cine_no} and th_no=#{th_no}
+</select>
+
+</mapper>

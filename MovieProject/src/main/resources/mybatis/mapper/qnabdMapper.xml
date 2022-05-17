@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.servicecenter.dao.QnabdDao">
+
+<insert id="insertQna" parameterType="movie.pro.servicecenter.dto.QnabdDto">
+	insert into qnabd values (qnabd_seq.nextval,#{qnabd_q},#{qnabd_a})
+</insert>
+
+<update id="updateQna" parameterType="movie.pro.servicecenter.dto.QnabdDto">
+	update qnabd set qnabd_q=#{qnabd_q},qnabd_a=#{qnabd_a} where qnabd_no=#{qnabd_no}
+</update>
+
+<delete id="deleteQna" parameterType="int">
+	delete from qnabd where qnabd_no=#{no}
+</delete>
+
+<select id="count" resultType="int">
+	select count(*) from qnabd order by qnabd_no
+</select>
+
+<select id="selectOne" parameterType="int" resultType="movie.pro.servicecenter.dto.QnabdDto">
+	select * from qnabd where qnabd_no=#{qnabd_no}
+</select>
+
+<select id="qnaboardList" parameterType="map" resultType="movie.pro.servicecenter.dto.QnabdDto">
+<![CDATA[
+	select * from
+	(select qnabd_no,qnabd_q,qnabd_a ,rownum r
+	from (select * from qnabd order by qnabd_no)
+	order by qnabd_no)where r >= #{start} AND r <= #{end}
+]]>
+</select>
+
+</mapper>

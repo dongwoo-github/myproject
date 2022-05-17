@@ -1,0 +1,13 @@
+@charset "UTF-8";
+#serviceMenu div {display:inline-block; background-color:#BCD2F9;}
+	 
+	 #serviceMenu div a {font-size: 20px; font-weight:bold; color:white; font-family:nanum ghothic}
+	 #serviceMenu div a:link{text-decoration:none;}
+	 #serviceMenu div a:visited {text-decoration:none;}
+ 	 #serviceMenu div a:hover {text-decoration:underline;}
+	 #serviceMenu div a:active {text-decoration:underline;}
+	 
+	 #serviceMenu {margin: 30px auto;}
+	 #serviceMenu .selected {background-color:#3B6EFA;}
+	 #serviceMenu .qna{width:500px; height:60px; line-height:60px; text-align:center;}
+	 #serviceMenu .inqubd{width:500px; height:60px; line-height:60px; text-align:center;}

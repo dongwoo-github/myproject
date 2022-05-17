@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.ticket.dao.TicketDao">
+
+<insert id="insertTicket" parameterType="movie.pro.ticket.dto.TicketDto">
+	insert into ticket values (#{tk_no},#{show_no},#{tk_pay},sysdate,#{tk_id},#{tk_a},#{tk_c},#{tk_seat})
+</insert>
+
+<update id="updateSeat" parameterType="movie.pro.ticket.dto.TicketDto">
+	update showinfo set th_extra = th_extra-(#{tk_a}+#{tk_c}) where show_no = #{show_no}
+</update>
+
+<update id="deleteSeat" parameterType="movie.pro.ticket.dto.TicketDto">
+	update showinfo set th_extra = th_extra+(#{tk_a}+#{tk_c}) where show_no = #{show_no}
+</update>
+
+<delete id="deleteTicket" parameterType="long">
+	delete from ticket where tk_no=#{tk_no}
+</delete>
+
+<select id="selectTkinfo" parameterType="long" resultType="movie.pro.ticket.dto.JoinTicketDto">
+	select * from ticket natural join showinfo natural join theater natural join cinema where tk_no=#{tk_no}
+</select>
+
+<select id="selectShowinfo" parameterType="long" resultType="movie.pro.ticket.dto.JoinShowinfoDto">
+	select * from showinfo natural join cinema natural join theater where show_no = #{show_no}
+</select>
+
+<select id="selectSeat" parameterType="long" resultType="string">
+	select tk_seat from ticket where show_no=#{show_no} 
+</select>
+
+<select id="showinfoCineList" parameterType="map" resultType="movie.pro.ticket.dto.JoinShowinfoDto">
+	select * from showinfo natural join cinema natural join theater where show_date=#{show_date} and cine_no=#{cine_no} order by mov_no, th_no, show_h , show_m
+</select>
+
+<select id="showinfoMovList" parameterType="map" resultType="movie.pro.ticket.dto.JoinShowinfoDto">
+	select * from showinfo natural join cinema natural join theater where mov_no=#{mov_no} and show_date=#{show_date} and cine_area=#{cine_area} order by cine_name, th_no, show_h , show_m
+</select>
+</mapper>

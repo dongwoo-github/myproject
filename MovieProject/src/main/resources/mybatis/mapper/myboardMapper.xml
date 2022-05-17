@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.pro.mypage.dao.MyboardDao">
+
+<!-- 내가쓴글 목록 -->
+<select id="myboardList" parameterType="String" resultType="movie.pro.mypage.dto.MyboardDto"> 
+	select * from movbd
+	where movbd_id=#{movbd_id}
+	order by movbd_no DESC
+</select>
+
+<select id="mycommList" parameterType="String" resultType="movie.pro.mypage.dto.MycommDto"> 
+	select * from movbd_comm
+	where comm_id=#{comm_id}
+	order by comm_no DESC
+</select>
+
+<select id="myinquList" parameterType="String" resultType="movie.pro.mypage.dto.MyinqubdDto"> 
+	select * from inqubd
+	where inqubd_id=#{inqubd_id}
+	order by inqubd_no DESC
+</select>
+
+
+<select id="count" resultType="int">
+	select count(*) from movbd
+</select>
+
+
+</mapper>

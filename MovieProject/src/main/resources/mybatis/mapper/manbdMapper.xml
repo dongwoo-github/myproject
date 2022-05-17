@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="movie.pro.manbd.dao.ManbdDao">
+
+<insert parameterType="movie.pro.manbd.dto.ManbdDto" id="insert"> 
+	insert into managerbd values(manbd_seq.nextval, #{manbd_title}, #{manbd_div}, #{manbd_cinema}, #{manbd_content}, sysdate) 
+</insert>
+
+<update parameterType="movie.pro.manbd.dto.ManbdDto" id="updateBoard"> 
+update managerbd set manbd_title = #{manbd_title}, manbd_div = #{manbd_div}, manbd_cinema = #{manbd_cinema}, manbd_content = #{manbd_content} where manbd_no = #{manbd_no} </update>
+
+<delete parameterType="int" id="deleteBoard"> delete from managerbd where manbd_no = #{manbd_no} </delete>
+
+
+
+<select parameterType="map" id="boardList" resultType="movie.pro.manbd.dto.ManbdDto">
+<![CDATA[
+		select * from
+		(select manbd_no, manbd_title, manbd_content, manbd_regdate, manbd_cinema ,manbd_div ,
+		 rownum r
+		from (select * from managerbd order by manbd_regdate desc)
+		order by manbd_regdate desc)where r >= #{start} AND r <= #{end}
+ 		]]>
+</select>
+
+<select parameterType="map" id="noticeList" resultType="movie.pro.manbd.dto.ManbdDto">
+<![CDATA[
+		select * from
+		(select manbd_no, manbd_title, manbd_content, manbd_regdate, manbd_cinema ,manbd_div ,
+		 rownum r
+		from (select * from managerbd where MANBD_DIV = '공지사항' order by manbd_regdate desc)
+		order by manbd_regdate desc)where r >= #{start} AND r <= #{end}
+ 		]]>
+</select>
+
+<select parameterType="map" id="eventList" resultType="movie.pro.manbd.dto.ManbdDto">
+<![CDATA[
+		select * from
+		(select manbd_no, manbd_title, manbd_content, manbd_regdate, manbd_cinema ,manbd_div ,
+		 rownum r
+		from (select * from managerbd where MANBD_DIV = '이벤트' order by manbd_regdate desc)
+		order by manbd_regdate desc)where r >= #{start} AND r <= #{end}
+ 		]]>
+</select>
+
+
+<select id="count" resultType="int"> select count(*) from managerbd </select>
+<select parameterType="int" id="boardOne" resultType="movie.pro.manbd.dto.ManbdDto"> 
+select * from managerbd where manbd_no = #{manbd_no} </select>
+
+<select id="countSearch" resultType="int" parameterType="map">
+		select count(*) from managerbd
+		<where>
+			<choose>
+				<when test="searchn == 0">
+				manbd_title  like '%'||#{search}||'%' </when>
+				<when test="searchn == 1"> manbd_content  like '%'||#{search}||'%'</when>
+				<when test="searchn == 2"> MANBD_CINEMA like '%'||#{search}||'%'</when>
+			</choose>
+		</where> 
+</select>
+
+<select id="boardListSearch" parameterType="map" resultType="movie.pro.manbd.dto.ManbdDto">
+		
+		select * from
+		(select manbd_no, manbd_title, manbd_content, manbd_regdate,manbd_cinema ,manbd_div,
+		rownum r
+		from (select * from managerbd order by manbd_regdate desc) 
+		
+		<where>
+			<choose>
+				<when test="searchn == 0">
+				manbd_title like '%'||#{search}||'%'</when>
+				<when test="searchn == 1"> manbd_content like '%'||#{search}||'%' </when>
+				<when test="searchn == 2"> MANBD_CINEMA like '%'||#{search}||'%' </when>
+			</choose>
+		</where> 
+		order by manbd_regdate desc 
+		
+		) where r >= #{start} AND r &lt;= #{end}
+ 		
+</select>
+
+
+</mapper>
