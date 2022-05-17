@@ -19,7 +19,7 @@ import movie.pro.admin.service.CinemaService;
 
 @Controller
 public class CinemaController {
-
+//ㅇㅇ
 	@Autowired
 	CinemaService service;
 	
@@ -59,7 +59,7 @@ public class CinemaController {
 	}//deleteCinema
 	
 	@GetMapping("admin/cinema/cineList")
-	public String cineList(@RequestParam(name="cineArea",defaultValue="서울") String cineArea,Model m) {
+	public String cineList(@RequestParam(name="cineArea",defaultValue="�꽌�슱") String cineArea,Model m) {
 		
 		List<TheaterDto> th_dto = service.thList();
 		List<CinemaDto> dto = service.cineList();
